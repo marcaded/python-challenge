@@ -1,6 +1,9 @@
 from pathlib import Path
 
 def open_file(fp):
+    ''' Opens file path using variable passed in from main function, counts how many
+    votes each candidate has and stores them in the _count variable using slicing, returns
+    these count variables'''
     ccs_count = 0
     dd_count = 0
     rad_count = 0
@@ -17,6 +20,8 @@ def open_file(fp):
     return ccs_count, dd_count, rad_count
 
 def total(countc, countd, countr):
+    '''Takes in three agruments for each candidates voter count, adds them all up to get a total vote count, then converts each candidates number of votes into a percentage value using the total votes. Then the if statement finds
+    the winner based on the highest percentage of voters for each candidate. Returns the total, each candidates percentage, and the winner as a string.'''
     total = countc+countd+countr
     ccs_percentage = (countc/total)*100
     dd_percentage = (countd/total)*100
@@ -35,10 +40,15 @@ def total(countc, countd, countr):
 
 
 def main():
+    '''Manages each functions input and output. Passes the election_data.csv file path into the open_file function, takes the return values and 
+    passes them in to the total function. Also manages the print statements to the terminal, as well as opening a seperate text file to print the results that file using another path variable defined
+    at the top'''
     in_file = Path("Resources/election_data.csv")
     out_file = Path("Analysis/Analysis.txt")
     ccs_count, dd_count, rad_count = open_file(in_file)
     totals, ccs_percentage, dd_percentage , ra_percentage, winner = total(ccs_count, dd_count, rad_count)
+    
+    
     print("Election Results")
     print('-------------------')
     print("Total Votes: {}".format(totals))
@@ -48,6 +58,8 @@ def main():
     print("Raymon Anthony Doane: {:.3f}% ({})".format(ra_percentage, rad_count))
     print("----------------------")
     print("Winner: {}".format(winner))
+    
+    
     with open(out_file, 'w') as fpath:
         fpath.write("Election Results")
         fpath.write('-------------------')
