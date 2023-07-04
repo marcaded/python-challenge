@@ -1,6 +1,8 @@
 from pathlib import Path
 
 def open_file(fpath):
+    '''This function opens the file path defined in the main function, splits and seperates the values into two seperate lists. months contains each of the months, and p_l (profi-loss) contains the converted strings to integers
+    of the profits and losses. This function returns the months list, the profit losses list, as well as totals of both of the lists'''
     with open(fpath) as fp:
         months = []
         fp.readline()
@@ -16,6 +18,8 @@ def open_file(fpath):
         return months, p_l, total_profit_loss, total_months
 
 def average(lst):
+    '''The average function takes in the list of profit losses created by the open file function, it runs through the list finding the difference between each of the months and appends that to the diff list, then returns the 
+    rounded average difference '''
     diff = []
     for i in range(len(lst)):
         try:
@@ -27,7 +31,9 @@ def average(lst):
 
     return round(avg, 2)
 def profits(lst):
-    
+    '''The profits function takes in the list of profit losses from the open file function, finds the differences between each of the values, and updates the greatest_inc and greatest_dec values depending on if the iterated 
+    difference is greater than or less than that value. This function also updates each of the indexes found based on when that for loop is finished running. profits returns the greatest increase in profits and the greatest
+    decrease in profits, as well as both of the indexes'''
     greatest_inc = 0
     greatest_dec = 0
     index = 0
@@ -56,6 +62,7 @@ def profits(lst):
     return -1 * (greatest_inc), -1 * (greatest_dec), index, jndex
     
 def dates(lst, i, j):
+    '''Dates takes in the dates list, and both the greatest_increase and greatest_decrease index, and finds each date at the specified index'''
     increase_day = lst[i+1] 
     decrease_day = lst[j+1] 
 
@@ -67,6 +74,7 @@ def dates(lst, i, j):
 
 
 def main():
+    '''Handles passing in each variable to all of the required functions, as well as prints statements to the terminal and exporting to a seperate txt file path.'''
     budget_data_csv = Path("Resources/budget_data.csv")
     fpath = Path("Analysis/Analysis.txt")
     months_l, numbers_s, total_profit_loss, total_months = open_file(budget_data_csv)
